@@ -24,7 +24,7 @@ namespace Box.V2.Config
         string DeviceId { get; set; }
         string DeviceName { get; set; }
         string UserAgent { get; set; }
-        
+
         /// <summary>
         /// Sends compressed responses from Box for faster response times
         /// </summary>
@@ -49,7 +49,54 @@ namespace Box.V2.Config
         Uri FileVersionRetentionsUri { get; }
         Uri EventsUri { get; }
         Uri MetadataTemplatesUri { get; }
+        Uri CreateMetadataTemplateUri { get; }
         Uri WebhooksUri { get; }
-        
+        Uri EnterprisesUri { get; }
+        Uri DevicePinUri { get; }
+
+        /// <summary>
+        /// Gets the shared items endpoint URI.
+        /// </summary>
+        /// <value>
+        /// The shared items endpoint URI.
+        /// </value>
+        Uri SharedItemsUri { get; }
+
+        /// <summary>
+        /// Gets the task assignments endpoint URI.
+        /// </summary>
+        /// <value>
+        /// The task assignments endpoint URI.
+        /// </value>
+        Uri TaskAssignmentsEndpointUri { get; }
+
+        /// <summary>
+        /// Gets the tasks endpoint URI.
+        /// </summary>
+        Uri TasksEndpointUri { get; }
+
+        /// <summary>
+        /// Gets the collections endpoint URI.
+        /// </summary>
+        /// <value>
+        /// The collections endpoint URI.
+        /// </value>
+        Uri CollectionsEndpointUri { get; }
+        /// <summary>
+        /// Gets the web links endpoint URI.
+        /// </summary>
+        Uri WebLinksEndpointUri { get; }
+        /// <summary>
+        /// Gets the legal hold policies endpoint URI.
+        /// </summary>
+        Uri LegalHoldPoliciesEndpointUri { get; }
+        /// <summary>
+        /// Gets the legal hold policy assignments endpoint URI.
+        /// </summary>
+        Uri LegalHoldPolicyAssignmentsEndpointUri { get; }
+        /// <summary>
+        /// Gets the file viersion legal holds endpoint URI.
+        /// </summary>
+        Uri FileVersionLegalHoldsEndpointUri { get; }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Box.V2.Models;
+using Newtonsoft.Json;
 using System;
 
 namespace Box.V2.Auth
@@ -30,11 +31,11 @@ namespace Box.V2.Auth
         /// Instantiates a new OAuth 2 session and allows you to define the auth version. This constructor is primarily 
         /// available to support legacy V1 calls. Creating an Auth session with V1 is not encouraged as they will not work in 2014
         /// </summary>
-        /// <param name="access_token"></param>
-        /// <param name="refresh_token"></param>
-        /// <param name="expires_in"></param>
-        /// <param name="token_type"></param>
-        /// <param name="authVersion"></param>
+        /// <param name="access_token">A valid access token</param>
+        /// <param name="refresh_token">A valid refresh token</param>
+        /// <param name="expires_in">Time in seconds the access token will expire</param>
+        /// <param name="token_type">Token type (usually bearer)</param>
+        /// <param name="authVersion">V1 or V2 auth</param>
         [Obsolete("V1 auth will no longer be available after 6/14")]
         public OAuthSession(string access_token, string refresh_token, int expires_in, string token_type, AuthVersion authVersion) 
         {
@@ -60,20 +61,26 @@ namespace Box.V2.Auth
         public string RefreshToken { get; private set; }
 
         /// <summary>
-        /// Seconds the access token will be active
+        /// Seconds the access token will be active.
         /// </summary>
         [JsonProperty(PropertyName = FieldExpiresIn)]
         public int ExpiresIn { get; private set; }
 
         /// <summary>
         /// Represents how the access token will be generated and presented
-        /// Most commonly this will be "bearer", anybody with a bearer token will have access
+        /// Most commonly this will be "bearer", anybody with a bearer token will have access.
         /// </summary>
         [JsonProperty(PropertyName = FieldTokenType)]
         public string TokenType { get; private set; }
-
+   
+        /// <summary>
+        /// Gets the restricted to.
+        /// </summary>
+        /// <value>
+        /// The restricted to.
+        /// </value>
         [JsonProperty(PropertyName = FieldRestrictedTo)]
-        public string[] RestrictedTo { get; private set; }
+        public BoxRestrictedTo[] RestrictedTo { get; private set; }
 
         /// <summary>
         /// Read-only property to provide support for legacy V1 authentication

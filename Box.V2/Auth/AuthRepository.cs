@@ -6,10 +6,6 @@ using Box.V2.Services;
 using Nito.AsyncEx;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace Box.V2.Auth
@@ -28,7 +24,7 @@ namespace Box.V2.Auth
         private readonly AsyncLock _mutex = new AsyncLock();
 
         /// <summary>
-        /// Fires when the authenticaiton session is invalidated
+        /// Fires when the authentication session is invalidated
         /// </summary>
         public event EventHandler SessionInvalidated;
 
@@ -38,11 +34,11 @@ namespace Box.V2.Auth
         public event EventHandler<SessionAuthenticatedEventArgs> SessionAuthenticated;
 
         /// <summary>
-        /// Instantiates a new AuthRepository
+        /// Instantiates a new AuthRepository.
         /// </summary>
-        /// <param name="boxConfig">The Box configuration that should be used</param>
-        /// <param name="boxService">The Box service that will be used to make the requests</param>
-        /// <param name="converter">How requests/responses will be serialized/deserialized respectively</param>
+        /// <param name="boxConfig">The Box configuration that should be used.</param>
+        /// <param name="boxService">The Box service that will be used to make the requests.</param>
+        /// <param name="converter">How requests/responses will be serialized/deserialized respectively.</param>
         public AuthRepository(IBoxConfig boxConfig, IBoxService boxService, IBoxConverter converter) : this(boxConfig, boxService, converter, null) { }
 
         /// <summary>
@@ -70,8 +66,8 @@ namespace Box.V2.Auth
         /// <summary>
         /// Authenticates the session by exchanging the provided auth code for a Access/Refresh token pair
         /// </summary>
-        /// <param name="authCode"></param>
-        /// <returns></returns>
+        /// <param name="authCode">Authorization Code. The authorization code is only valid for 30 seconds.</param>
+        /// <returns>The session of the Box Client after authentification</returns>
         public virtual async Task<OAuthSession> AuthenticateAsync(string authCode)
         {
             OAuthSession session = await ExchangeAuthCode(authCode);
@@ -91,8 +87,8 @@ namespace Box.V2.Auth
         /// this method should not need to be called explicitly, as an automatic refresh is invoked when the SDK 
         /// detects that the tokens have expired. 
         /// </summary>
-        /// <param name="accessToken"></param>
-        /// <returns></returns>
+        /// <param name="accessToken">The access token to refresh.</param>
+        /// <returns>Refreshed session of Box Client.</returns>
         public virtual async Task<OAuthSession> RefreshAccessTokenAsync(string accessToken)
         {
             OAuthSession session;
@@ -106,7 +102,7 @@ namespace Box.V2.Auth
                 {
                     // Add the expired token to the list so subsequent calls will get new acces token. Add
                     // token to the list before making the network call. This way, if refresh fails, subsequent calls
-                    // with the same refresh token will not attempt te call. 
+                    // with the same refresh token will not attempt the call. 
                     _expiredTokens.Add(accessToken);
 
                     session = await ExchangeRefreshToken(Session.RefreshToken).ConfigureAwait(false);
@@ -122,7 +118,6 @@ namespace Box.V2.Auth
         /// <summary>
         /// Logs the current session out by invalidating the current Access/Refresh tokens
         /// </summary>
-        /// <returns></returns>
         public virtual async Task LogoutAsync()
         {
             string token;
@@ -139,8 +134,8 @@ namespace Box.V2.Auth
         /// <summary>
         /// Performs the authentication request using the provided auth code
         /// </summary>
-        /// <param name="authCode"></param>
-        /// <returns></returns>
+        /// <param name="authCode">Authorization Code. The authorization code is only valid for 30 seconds.</param>
+        /// <returns>The current session after exchanging Authorization Code</returns>
         protected async Task<OAuthSession> ExchangeAuthCode(string authCode)
         {
             if (string.IsNullOrWhiteSpace(authCode))
@@ -165,8 +160,8 @@ namespace Box.V2.Auth
         /// <summary>
         /// Performs the refresh request using the provided refresh token
         /// </summary>
-        /// <param name="refreshToken"></param>
-        /// <returns></returns>
+        /// <param name="refreshToken">Refresh token used to exchange for a new access token. Each refresh_token is valid for one use in 60 days. Every time you get a new access_token by using a refresh_token, we reset your timer for the 60 day period and hand you a new refresh_token</param>
+        /// <returns>Refreshed Box Client session</returns>
         protected async Task<OAuthSession> ExchangeRefreshToken(string refreshToken)
         {
             if (string.IsNullOrWhiteSpace(refreshToken))
@@ -202,8 +197,7 @@ namespace Box.V2.Auth
         /// <summary>
         /// Performs the revoke request using the provided access token. This will invalidate both the access and refresh tokens
         /// </summary>
-        /// <param name="accessToken"></param>
-        /// <returns></returns>
+        /// <param name="accessToken">The access token to invalidate</param>
         protected async Task InvalidateTokens(string accessToken)
         {
             if (string.IsNullOrWhiteSpace(accessToken))
@@ -223,24 +217,16 @@ namespace Box.V2.Auth
         /// </summary>
         protected void OnSessionInvalidated()
         {
-            var handler = SessionInvalidated;
-            if (handler != null)
-            {
-                handler(this, new EventArgs());
-            }
+            SessionInvalidated?.Invoke(this, new EventArgs());
         }
 
         /// <summary>
-        /// Allows sub classes to invoke the SessionAuthenticated event
+        /// Allows sub classes to invoke the SessionAuthenticated event.
         /// </summary>
-        /// <param name="e"></param>
+        ///<param name="session">Authenticated session.</param>
         protected void OnSessionAuthenticated(OAuthSession session)
         {
-            var handler = SessionAuthenticated;
-            if (handler != null)
-            {
-                handler(this, new SessionAuthenticatedEventArgs(session));
-            }
+            SessionAuthenticated?.Invoke(this, new SessionAuthenticatedEventArgs(session));
         }
 
     }

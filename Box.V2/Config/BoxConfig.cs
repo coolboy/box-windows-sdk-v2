@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Box.V2.Config
 {
     public class BoxConfig : IBoxConfig
     {
-        private const string DefaultUserAgent = "Box Windows SDK v2.12.1";
+        private const string DefaultUserAgent = "Box Windows SDK v2.13.0";
 
         /// <summary>
         /// Instantiates a Box config with all of the standard defaults
@@ -32,7 +29,7 @@ namespace Box.V2.Config
         /// <param name="jwtPrivateKey"></param>
         /// <param name="jwtPrivateKeyPassword"></param>
         /// <param name="jwtPublicKeyId"></param>
-        public BoxConfig(string clientId, string clientSecret, string enterpriseId, 
+        public BoxConfig(string clientId, string clientSecret, string enterpriseId,
             string jwtPrivateKey, string jwtPrivateKeyPassword, string jwtPublicKeyId)
         {
             ClientId = clientId;
@@ -84,17 +81,65 @@ namespace Box.V2.Config
         public virtual Uri CollaborationsEndpointUri { get { return new Uri(BoxApiUri, Constants.CollaborationsString); } }
         public virtual Uri GroupsEndpointUri { get { return new Uri(BoxApiUri, Constants.GroupsString); } }
         public virtual Uri GroupMembershipEndpointUri { get { return new Uri(BoxApiUri, Constants.GroupMembershipString); } }
-        public virtual Uri RetentionPoliciesEndpointUri {  get { return new Uri(BoxApiUri, Constants.RetentionPoliciesString); } }
-        public virtual Uri RetentionPolicyAssignmentsUri {  get { return new Uri(BoxApiUri, Constants.RetentionPolicyAssignmentsString); } }
+        public virtual Uri RetentionPoliciesEndpointUri { get { return new Uri(BoxApiUri, Constants.RetentionPoliciesString); } }
+        public virtual Uri RetentionPolicyAssignmentsUri { get { return new Uri(BoxApiUri, Constants.RetentionPolicyAssignmentsString); } }
         public virtual Uri FileVersionRetentionsUri { get { return new Uri(BoxApiUri, Constants.FileVersionRetentionsString); } }
         public virtual Uri EventsUri { get { return new Uri(BoxApiUri, Constants.EventsString); } }
         public virtual Uri MetadataTemplatesUri { get { return new Uri(BoxApiUri, Constants.MetadataTemplatesString); } }
+        public virtual Uri CreateMetadataTemplateUri { get { return new Uri(BoxApiUri, Constants.CreateMetadataTemplateString); } }
         public virtual Uri WebhooksUri { get { return new Uri(BoxApiUri, Constants.WebhooksString); } }
+        public virtual Uri EnterprisesUri { get { return new Uri(BoxApiUri, Constants.EnterprisesString); } }
+        public virtual Uri DevicePinUri { get { return new Uri(BoxApiUri, Constants.DevicePinString); } }
+
+        /// <summary>
+        /// Gets the shared items endpoint URI.
+        /// </summary>
+        /// <value>
+        /// The shared items endpoint URI.
+        /// </value>
+        public virtual Uri SharedItemsUri { get { return new Uri(BoxApiUri, Constants.SharedItemsString); } }
+
+        /// <summary>
+        /// Gets the task assignments endpoint URI.
+        /// </summary>
+        /// <value>
+        /// The task assignments endpoint URI.
+        /// </value>
+        public virtual Uri TaskAssignmentsEndpointUri { get { return new Uri(BoxApiUri, Constants.TaskAssignmentsString); } }
+
+        /// <summary>
+        /// Gets the tasks endpoint URI.
+        /// </summary>
+        public virtual Uri TasksEndpointUri { get { return new Uri(BoxApiUri, Constants.TasksString); } }
+
+        /// <summary>
+        /// Gets the collections endpoint URI.
+        /// </summary>
+        /// <value>
+        /// The collections endpoint URI.
+        /// </value>
+        public virtual Uri CollectionsEndpointUri { get { return new Uri(BoxApiUri, Constants.CollectionsString); } }
+        /// <summary>
+        /// Gets the web links endpoint URI.
+        /// </summary>
+        public virtual Uri WebLinksEndpointUri { get { return new Uri(BoxApiUri, Constants.WebLinksString); } }
+        /// <summary>
+        /// Gets the legal hold policies endpoint URI.
+        /// </summary>
+        public virtual Uri LegalHoldPoliciesEndpointUri { get { return new Uri(BoxApiUri, Constants.LegalHoldPoliciesString); } }
+        /// <summary>
+        /// Gets the legal hold policies endpoint URI.
+        /// </summary>
+        public virtual Uri LegalHoldPolicyAssignmentsEndpointUri { get { return new Uri(BoxApiUri, Constants.LegalHoldPolicyAssignmentsString); } }
+        /// <summary>
+        /// Gets the file viersion legal holds endpoint URI.
+        /// </summary>
+        public virtual Uri FileVersionLegalHoldsEndpointUri { get { return new Uri(BoxApiUri, Constants.FileVersionLegalHoldsString); } }
     }
 
     public enum CompressionType
     {
-        gzip, 
+        gzip,
         deflate
     }
 }

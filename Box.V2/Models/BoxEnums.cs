@@ -31,7 +31,13 @@ namespace Box.V2.Models
     public enum BoxSortBy
     {
         Type,
-        Name
+        Name,
+        file_version_id,
+        Id,
+        policy_name,
+        retention_policy_id,
+        retention_policy_object_id,
+        retention_policy_set_id
     }
 
     /// <summary>
@@ -54,5 +60,36 @@ namespace Box.V2.Models
         test,
         move,
         copy
+    }
+
+    /// <summary>
+    /// Resulution state of task assignment
+    /// </summary>
+    public enum ResolutionStateType
+    {
+        completed,
+        incomplete,
+        approved,
+        rejected
+    }
+
+    /// <summary>
+    /// The operation type for a metadata template update
+    /// </summary>
+    public enum MetadataTemplateUpdateOp
+    {
+        addEnumOption,
+        addField,
+        editField,
+        editTemplate,
+        reorderEnumOptions,
+        reorderFields
+    }
+
+    public enum UserEventsStreamType
+    {
+        all,
+        changes,
+        sync
     }
 }

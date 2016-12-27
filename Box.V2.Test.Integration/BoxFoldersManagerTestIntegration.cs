@@ -35,16 +35,16 @@ namespace Box.V2.Test.Integration
         }
 
         private static async Task AssertFolderContents(BoxClient boxClient)
-{
+        {
             const int totalCount = 11;
             const int numFiles = 9;
             const int numFolders = 2;
 
-            BoxCollection<BoxItem> c = await boxClient.FoldersManager.GetFolderItemsAsync("0", 50, 0, new List<string>() { 
+            BoxCollection<BoxItem> c = await boxClient.FoldersManager.GetFolderItemsAsync("0", 3, 0, new List<string>() { 
                 BoxItem.FieldName, 
                 BoxItem.FieldSize, 
                 BoxFolder.FieldItemCollection
-             });
+             }, autoPaginate: true);
 
             Assert.AreEqual(totalCount, c.TotalCount, "Incorrect total count");
             Assert.AreEqual(totalCount, c.Entries.Count, "Incorrect number if items returned");
@@ -58,6 +58,30 @@ namespace Box.V2.Test.Integration
         {
             var results = await _client.FoldersManager.GetTrashItemsAsync(10);
             Assert.IsNotNull(results);
+        }
+
+        [TestMethod]
+        public async Task Watermark_Folders_CRUD()
+        {
+            const string folderId = "1927308583";
+
+            var mylist = new List<string>(new string[] { "watermark_info" });
+            var folder = await _client.FoldersManager.GetInformationAsync(folderId, mylist);
+
+            Assert.IsFalse(folder.WatermarkInfo.IsWatermarked);
+
+            var watermark = await _client.FoldersManager.ApplyWatermarkAsync(folderId);
+            Assert.IsNotNull(watermark, "Failed to apply watermark to folder");
+
+            folder = await _client.FoldersManager.GetInformationAsync(folderId, mylist);
+            Assert.IsTrue(folder.WatermarkInfo.IsWatermarked);
+
+            var fetchedWatermark = await _client.FoldersManager.GetWatermarkAsync(folderId);
+            Assert.IsNotNull(fetchedWatermark, "Failed to fetch watermark of folder");
+
+            var result = await _client.FoldersManager.RemoveWatermarkAsync(folderId);
+            Assert.IsTrue(result, "Failed to remove watermark from folder");
+
         }
 
         [TestMethod]

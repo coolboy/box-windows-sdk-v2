@@ -60,14 +60,24 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="BoxCollectionsManagerTestIntegration.cs" />
+    <Compile Include="BoxDevicePinManagerTestIntegration.cs" />
+    <Compile Include="BoxEventsManagerTestIntegration.cs" />
     <Compile Include="BoxFilesManagerTestIntegration.cs" />
     <Compile Include="BoxFoldersManagerTestIntegration.cs" />
+    <Compile Include="BoxLegalHoldPoliciesManagerTestIntegration.cs" />
+    <Compile Include="BoxTasksManagerTestIntegration.cs" />
+    <Compile Include="BoxMetadataManagerTestIntegration.cs" />
     <Compile Include="BoxResourceManagerTestIntegration.cs" />
     <Compile Include="BoxCommentsManagerTestIntegration.cs" />
     <Compile Include="BoxSearchManagerTestIntegration.cs" />
+    <Compile Include="BoxSharedItemsManagerTestIntegration.cs" />
     <Compile Include="BoxUsersManagerTestIntegration.cs" />
     <Compile Include="BoxCollaborationsManagerTestIntegration.cs" />
     <Compile Include="BoxAuthTestIntegration.cs" />
+    <Compile Include="BoxRetentionPoliciesManagerTestIntegration.cs" />
+    <Compile Include="BoxWebhooksManagerTestIntegration.cs" />
+    <Compile Include="BoxWebLinkManagerTestIntegration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="BoxGroupsManagerTestIntegration.cs" />
   </ItemGroup>

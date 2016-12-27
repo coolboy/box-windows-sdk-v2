@@ -11,17 +11,17 @@ namespace Box.V2.Test.Integration
     [TestClass]
     public class BoxFilesManagerTestIntegration : BoxResourceManagerTestIntegration
     {
-        [TestMethod]
-        public async Task GetStreamResponse()
-        {
-            const string pdfFileId = "16894929979";
-            const int totalPages = 227;
-            var filePreview = await _client.FilesManager.GetFilePreviewAsync(pdfFileId, 1);
+        //[TestMethod]
+        //public async Task GetStreamResponse()
+        //{
+        //    const string pdfFileId = "16894929979";
+        //    const int totalPages = 227;
+        //    var filePreview = await _client.FilesManager.GetFilePreviewAsync(pdfFileId, 1);
 
-            Assert.AreEqual(1, filePreview.CurrentPage, "Invalid current page");
-            Assert.AreEqual(totalPages, filePreview.TotalPages, "Invalid total pages");
-            Assert.AreEqual(HttpStatusCode.OK, filePreview.ReturnedStatusCode, "Invalid status code");
-        }
+        //    Assert.AreEqual(1, filePreview.CurrentPage, "Invalid current page");
+        //    Assert.AreEqual(totalPages, filePreview.TotalPages, "Invalid total pages");
+        //    Assert.AreEqual(HttpStatusCode.OK, filePreview.ReturnedStatusCode, "Invalid status code");
+        //}
 
         [TestMethod]
         public async Task GetInformation_Fields_ValidResponse()
@@ -73,7 +73,30 @@ namespace Box.V2.Test.Integration
             BoxFile fileLink = await _client.FilesManager.CreateSharedLinkAsync(imageFileId1, linkReq);
             Assert.AreEqual(BoxSharedLinkAccessType.open, fileLink.SharedLink.Access);
         }
-            
+
+        [TestMethod]
+        public async Task Watermark_Files_CRUD()
+        {
+            const string fileId = "16894944949";
+
+            var mylist = new List<string>(new string[] { "watermark_info" });
+            var file = await _client.FilesManager.GetInformationAsync(fileId, mylist);
+            Assert.IsFalse(file.WatermarkInfo.IsWatermarked);
+
+            var watermark = await _client.FilesManager.ApplyWatermarkAsync(fileId);
+            Assert.IsNotNull(watermark, "Failed to apply watermark to file");
+
+            file = await _client.FilesManager.GetInformationAsync(fileId, mylist);
+            Assert.IsTrue(file.WatermarkInfo.IsWatermarked);
+
+            var fetchedWatermark = await _client.FilesManager.GetWatermarkAsync(fileId);
+            Assert.IsNotNull(fetchedWatermark, "Failed to fetch watermark of file");
+
+            var result = await _client.FilesManager.RemoveWatermarkAsync(fileId);
+            Assert.IsTrue(result, "Failed to remove watermark from file");
+
+        }
+
         [TestMethod]
         public async Task FileWorkflow_ValidRequest_ValidResponse()
         {

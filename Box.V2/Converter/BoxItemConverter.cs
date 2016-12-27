@@ -1,12 +1,9 @@
 ﻿using Box.V2.Config;
 using Box.V2.Models;
+using Box.V2.Utility;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Box.V2.Converter
 {
@@ -14,12 +11,13 @@ namespace Box.V2.Converter
     {
         const string ItemType = "type";
         const string EventSourceItemType = "item_type";
+        const string WatermarkType = "watermark";
 
         protected override BoxEntity Create(Type objectType, JObject jObject)
         {
             if (FieldExists(ItemType, jObject))
             {
-                switch(jObject[ItemType].ToString())
+                switch (jObject[ItemType].ToString())
                 {
                     case Constants.TypeFile:
                         return new BoxFile();
@@ -53,6 +51,20 @@ namespace Box.V2.Converter
                         return new BoxUserInvite();
                     case Constants.TypeWebhook:
                         return new BoxWebhook();
+                    case Constants.TypeTask:
+                        return new BoxTask();
+                    case Constants.TypeEmailAlias:
+                        return new BoxEmailAlias();
+                    case Constants.TypeTaskAssignment:
+                        return new BoxTaskAssignment();
+                    case Constants.TypeCollection:
+                        return new BoxCollectionItem();
+                    case Constants.TypeDevicePin:
+                        return new BoxDevicePin();
+                    case Constants.TypeLegalHoldPolicy:
+                        return new BoxLegalHoldPolicy();
+                    case Constants.TypeLegalHoldPolicyAssignment:
+                        return new BoxLegalHoldPolicyAssignment();
                 }
             }
             //There is an inconsistency in the events API where file sources have slightly different field names
@@ -64,6 +76,10 @@ namespace Box.V2.Converter
                         return new BoxFileEventSource();
                 }
             }
+            else if (FieldExists(WatermarkType, jObject))
+            {
+                return new BoxWatermarkResponse();
+            }
             return new BoxEntity();
         }
 
@@ -72,7 +88,7 @@ namespace Box.V2.Converter
             return jObject[fieldName] != null;
         }
     }
-    
+
     internal abstract class JsonCreationConverter<T> : JsonConverter
     {
         /// <summary>
@@ -85,7 +101,7 @@ namespace Box.V2.Converter
 
         public override bool CanConvert(Type objectType)
         {
-            return typeof(T).IsAssignableFrom(objectType);
+            return CrossPlatform.CanConvert<T>(objectType);
         }
 
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)

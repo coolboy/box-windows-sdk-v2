@@ -126,6 +126,12 @@ namespace Box.V2
             RetentionPoliciesManager = new BoxRetentionPoliciesManager(Config, _service, _converter, Auth, _asUser, _suppressNotifications);
             MetadataManager = new BoxMetadataManager(Config, _service, _converter, Auth, _asUser, _suppressNotifications);
             WebhooksManager = new BoxWebhooksManager(Config, _service, _converter, Auth, _asUser, _suppressNotifications);
+            TasksManager = new BoxTasksManager(Config, _service, _converter, Auth, _asUser, _suppressNotifications);
+            SharedItemsManager = new BoxSharedItemsManager(Config, _service, _converter, Auth, _asUser, _suppressNotifications);
+            CollectionsManager = new BoxCollectionsManager(Config, _service, _converter, Auth, _asUser, _suppressNotifications);
+            DevicePinManager = new BoxDevicePinManager(Config, _service, _converter, Auth, _asUser, _suppressNotifications);
+            WebLinksManager = new BoxWebLinksManager(Config, _service, _converter, Auth, _asUser, _suppressNotifications);
+            LegalHoldPoliciesManager = new BoxLegalHoldPoliciesManager(Config, _service, _converter, Auth, _asUser, _suppressNotifications);
 
             // Init Resource Plugins Manager
             ResourcePlugins = new BoxResourcePlugins();
@@ -204,6 +210,16 @@ namespace Box.V2
         public BoxWebhooksManager WebhooksManager { get; private set; }
 
         /// <summary>
+        /// The manager that represents the tasks endpoint
+        /// </summary>
+        public BoxTasksManager TasksManager { get; private set; }
+
+        /// <summary>
+        /// The manager that represents the legal hold policies endpoint
+        /// </summary>
+        public BoxLegalHoldPoliciesManager LegalHoldPoliciesManager { get; private set; }
+
+        /// <summary>
         /// The Auth repository that holds the auth session
         /// </summary>
         public IAuthRepository Auth { get; private set; }
@@ -212,6 +228,26 @@ namespace Box.V2
         /// Allows resource managers to be registered and retrieved as plugins
         /// </summary>
         public BoxResourcePlugins ResourcePlugins { get; private set; }
+
+        /// <summary>
+        /// The manager that represents the shared items endpoint
+        /// </summary>
+        public BoxSharedItemsManager SharedItemsManager { get; private set; }
+
+        /// <summary>
+        /// The manager that represents the collections endpoint
+        /// </summary>
+        public BoxCollectionsManager CollectionsManager { get; private set; }
+
+        /// <summary>
+        /// The manager that represents the device pin endpoint
+        /// </summary>
+        public BoxDevicePinManager DevicePinManager { get; private set; }
+
+        /// <summary>
+        /// The manager that represents the weblinks endpoint
+        /// </summary>
+        public BoxWebLinksManager WebLinksManager { get; private set; }
 
     }
 }
