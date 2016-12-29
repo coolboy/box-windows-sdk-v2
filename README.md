@@ -1,6 +1,6 @@
 [![Project Status](http://opensource.box.com/badges/active.svg)](http://opensource.box.com/badges)
 
-Test2
+Test3
 
 Box Windows V2 SDK
 ==================
