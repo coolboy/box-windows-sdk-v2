@@ -1,4 +1,5 @@
 [![Project Status](http://opensource.box.com/badges/active.svg)](http://opensource.box.com/badges)
+[![Build Status](http://dotnet-ci3282.cloudapp.net:8080/buildStatus/icon?job=dotnet-push-t1)](http://dotnet-ci3282.cloudapp.net:8080/job/dotnet-push-t1/)
 
 Box Windows V2 SDK
 ==================
