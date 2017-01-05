@@ -3,10 +3,7 @@
 Jekins:
 [![Build Status](http://dotnet-ci3282.cloudapp.net:8080/buildStatus/icon?job=dotnet-push-t1)](http://dotnet-ci3282.cloudapp.net:8080/job/dotnet-push-t1/)
 
-Appveyor:
-[![Build status](https://ci.appveyor.com/api/projects/status/8wtj8903xf6hdgr9/branch/master?svg=true)](https://ci.appveyor.com/project/coolboy/box-windows-sdk-v2/branch/master)
-
-Appveyor Core: 
+Appveyor: 
 [![Build status](https://ci.appveyor.com/api/projects/status/fajd26316rx4uy76/branch/master?svg=true)](https://ci.appveyor.com/project/coolboy/box-windows-sdk-v2-2np5b/branch/master)
 
 Box Windows V2 SDK
